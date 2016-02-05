@@ -15,6 +15,8 @@ class Sonde
         double Gett() { return t; }
         Matrice** Getd() {return &d;}
         void Update(double h);
+        double GetX(int i,int j) {return X.GetValue(i,j);};
+        double GetY(int i,int j) {return Y.GetValue(i,j);};
     protected:
     private:
         int nbAstres;
@@ -26,5 +28,3 @@ class Sonde
 };
 
 #endif // SONDE_H
-
-
