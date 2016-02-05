@@ -2,7 +2,9 @@
 #define ASTRE_H
 
 #include <math.h>
+#include <Matrice.h>
 
+using namespace std;
 
 class Astre
 {
@@ -13,18 +15,17 @@ class Astre
         void Setmass(double val) { mass = val; }
         double Getradius() { return radius; }
         void Setradius(double val) { radius = val; }
-        double* Getpos() { return pos; }
-        void Setpos(double val[2]) { pos = val; }
         double Gettheta0() { return theta0; }
         void Settheta0(double val) { theta0 = val; }
-        double Getspeed() { return speed; }
-        void Setspeed(double val) { speed = val; }
+        Matrice* GetX() {return &X;};
         void Update(double t);
+
     protected:
     private:
         double mass;
         double radius;
-        double* pos;
+        Matrice X = Matrice(2,1);
+        Matrice Y = Matrice(2,1);
         double theta0;
         double speed;
 };
