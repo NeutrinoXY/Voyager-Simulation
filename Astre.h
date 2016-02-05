@@ -2,7 +2,8 @@
 #define ASTRE_H
 
 #include <math.h>
-#include <Matrice.h>
+#include "Matrice.h"
+#include <iostream>
 
 using namespace std;
 
