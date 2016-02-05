@@ -19,6 +19,7 @@ class Astre
         double Gettheta0() { return theta0; }
         void Settheta0(double val) { theta0 = val; }
         Matrice* GetX() {return &X;};
+        Matrice* GetY() {return &Y;};
         void Update(double t);
 
     protected:
