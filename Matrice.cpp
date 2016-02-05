@@ -9,9 +9,7 @@ Matrice::Matrice(int a, int b)
     for(int i=0; i<a ; i++)
     {
         m[i] = new double[b];
-    }
-    for(int i=0; i<a ; i++)
-    {
+
         for(int j=0; j<b ; j++)
         {
             m[i][j]=0;
@@ -52,8 +50,8 @@ Matrice operator*(Matrice A, Matrice B)
 
         for(int i=0; i<nlA ; i++)
             for(int j=0; j<ncB ; j++)
-                for(int k=0; k<ncA ; k++)
-                    m[i][j]+=(A.GetValue(i,k))*(B.GetValue(k,j));
+                for(int k=0; k<ncA ; k++){
+                    m[i][j]+=(A.GetValue(i,k))*(B.GetValue(k,j));}
 
         result.Set(m);
         return result;
@@ -83,6 +81,7 @@ Matrice operator+(Matrice A, Matrice B)
             for (int j=0; j<ncB; j++)
                 m[i][j] = 0;
         }
+
 
         for(int i=0; i<nlA ; i++)
             for(int j=0; j<ncB ; j++)
