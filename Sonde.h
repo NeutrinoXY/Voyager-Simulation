@@ -13,14 +13,16 @@ class Sonde
         void SetnbAstres(int val) { nbAstres = val; }
         Astre* Getastre() { return astre; }
         double Gett() { return t; }
-        double* Getd() { return d; }
-        void EDP(double t, double* X, double* dX);
+        void Update(double h);
     protected:
     private:
         int nbAstres;
-        Astre *astre;
+        Astre* astre;
         double t;
-        double* d;
+        Matrice d = Matrice(nbAstres,1);
+        Matrice X = Matrice(2,1);
+        Matrice Y = Matrice(2,1);
 };
 
 #endif // SONDE_H
+
