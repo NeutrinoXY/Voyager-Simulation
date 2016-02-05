@@ -35,7 +35,7 @@ int main()
         for (int i=0; i<2*(**d).GetValue(0,0); i++)
             cout << " ";
 
-        cout << "(°;...;°)GAETANGAY" << endl;
+        cout << "(°;...;°)Maxim(sans e)GAY" << endl;
         sonde.Update(0.001);
     }
 
