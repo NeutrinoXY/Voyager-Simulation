@@ -4,9 +4,6 @@ Astre::Astre()
 {
     mass = 333054.253182; // par rapport a la Terre
     radius = 0; // distance Terre Soleil
-    double* p = new double[2];
-    p[0]=0;
-    p[1]=0;
     theta0 = 0;
 }
 
@@ -25,4 +22,5 @@ void Astre::Update(double t)
         Y.SetValue(0,1, speed*sin(theta0+t*speed/radius));
     }
 }
+
 
