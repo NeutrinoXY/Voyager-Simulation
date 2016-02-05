@@ -18,9 +18,7 @@ void Astre::Update(double t)
     {
         X.SetValue(0,0, radius*cos(theta0+t*speed/radius));
         Y.SetValue(0,0, radius*sin(theta0+t*speed/radius));
-        X.SetValue(0,1, speed*cos(theta0+t*speed/radius));
-        Y.SetValue(0,1, speed*sin(theta0+t*speed/radius));
-    }
+        X.SetValue(0,1, speed*sin(theta0+t*speed/radius));
+        Y.SetValue(0,1, -speed*cos(theta0+t*speed/radius));
+    }// seulement si circulaire
 }
-
-
