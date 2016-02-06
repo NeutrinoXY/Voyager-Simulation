@@ -40,11 +40,11 @@ int main()
         cout << "(°;...;°)" << endl;
         sonde.Update(0.001);
     }/*/
-    for(int t=0; t<2500; t++)
+    for(int t=0; t<2500000; t++)
     {
         system("cls");
-        cout << 32+(int)sonde.GetY(0,0) << endl << 113+(int)sonde.GetX(0,0) << endl;
-        for(int i=0; i<61; i++)
+        cout << sonde.GetX(0,0) << "   " << sonde.GetX(1,0) << endl << sonde.GetY(0,0) << "   " << sonde.GetY(1,0) << endl;
+        for(int i=0; i<60; i++)
         {
             if (i==32)
             {
@@ -57,7 +57,7 @@ int main()
                         else if (j==113)
                             cout << "O";
                         else
-                            cout << "_";
+                            cout << " ";
                     }
                 }
                 else
@@ -66,7 +66,7 @@ int main()
                         if (j==113)
                             cout << "O";
                         else
-                            cout << "_";
+                            cout << " ";
                     }
             }
             else if (i==32+(int)sonde.GetY(0,0)/10)
@@ -77,18 +77,20 @@ int main()
                     if (j==113+(int)sonde.GetX(0,0))
                         cout << "X";
                     else
-                        cout << "_";
+                        cout << " ";
                 }
             }
             else
             {
                 cout << endl;
-                for(int j=0; j<236; j++)
-                    cout << "_";
+                /*/for(int j=0; j<236; j++)
+                    cout << " ";
+                /*/
             }
         }
-    sonde.Update(0.1);
-    cin.ignore(); // Pause
+    sonde.Update(0.01);
+    if (!(t%1000))
+        cin.ignore(); // Pause
     }
 
     return 0;
