@@ -1,27 +1,35 @@
-#ifndef MATRICE_H
-#define MATRICE_H
+#ifndef ASTRE_H
+#define ASTRE_H
 
+#include <math.h>
+#include "Matrice.h"
+#include <iostream>
 
-class Matrice
+using namespace std;
+
+class Astre
 {
     public:
-        Matrice(int a, int b);
-        virtual ~Matrice();
-        double GetValue(int a,int b) { return matrix[a][b]; }
-        void GetSize(int& a, int& b) { a=nl;b=nc; }
-        void Set(double** val) { matrix = val; }
-        void SetValue(int a, int b, double x) { matrix[a][b]=x; }
-
+        Astre();
+        virtual ~Astre();
+        double Getmass() { return mass; }
+        void Setmass(double val) { mass = val; }
+        double Getradius() { return radius; }
+        void Setradius(double val) { radius = val; }
+        double Gettheta0() { return theta0; }
+        void Settheta0(double val) { theta0 = val; }
+        Matrice* GetX() {return &X;};
+        Matrice* GetY() {return &Y;};
+        void Update(double t);
 
     protected:
     private:
-        double** matrix;
-        int nl;
-        int nc;
+        double mass;
+        double radius;
+        Matrice X = Matrice(2,1);
+        Matrice Y = Matrice(2,1);
+        double theta0;
+        double speed;
 };
 
-Matrice operator*(Matrice A, Matrice B);
-Matrice operator+(Matrice A, Matrice B);
-Matrice operator-(Matrice A, Matrice B);
-
-#endif // MATRICE_H
+#endif // ASTRE_H
