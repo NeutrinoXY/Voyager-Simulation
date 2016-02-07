@@ -2,17 +2,17 @@
 #include "Astre.h"
 #include <iostream>
 #include <math.h>
-#define G 0.1
+#define G 0.5
 
 using namespace std;
 
 Sonde::Sonde(Astre *a, int nbA)
 {
     astre=a;
-    X.SetValue(0,0,10);
+    X.SetValue(0,0,50);
     Y.SetValue(0,0,0);
     X.SetValue(1,0,0);
-    Y.SetValue(1,0,55);
+    Y.SetValue(1,0,57.7);
     t=0;
     nbAstres=nbA;
     d = new Matrice(nbA,1);
@@ -20,7 +20,7 @@ Sonde::Sonde(Astre *a, int nbA)
 
 Sonde::~Sonde()
 {
-    //dtor
+    //delete d;
 }
 
 void Sonde::Update(double h)
