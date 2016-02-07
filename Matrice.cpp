@@ -3,6 +3,7 @@
 
 using namespace std;
 
+
 Matrice::Matrice(int a, int b)
 {
     double** m = new double*[a];
@@ -11,9 +12,8 @@ Matrice::Matrice(int a, int b)
         m[i] = new double[b];
 
         for(int j=0; j<b ; j++)
-        {
             m[i][j]=0;
-        }
+
     }
     matrix = m;
     nl = a;
@@ -22,7 +22,7 @@ Matrice::Matrice(int a, int b)
 
 Matrice::~Matrice()
 {
-    //dtor
+
 }
 
 Matrice operator*(Matrice A, Matrice B)
@@ -54,6 +54,7 @@ Matrice operator*(Matrice A, Matrice B)
                     m[i][j]+=(A.GetValue(i,k))*(B.GetValue(k,j));}
 
         result.Set(m);
+
         return result;
     }
 }
