@@ -18,15 +18,16 @@ class Astre
         void Setradius(double val) { radius = val; }
         double Gettheta0() { return theta0; }
         void Settheta0(double val) { theta0 = val; }
-        Matrice* GetX() {return &X;};
+        Matrice* GetX() {return &X;}
+        Matrice* GetY() {return &Y;}
         void Update(double t);
 
     protected:
     private:
         double mass;
         double radius;
-        Matrice X = Matrice(2,1);
-        Matrice Y = Matrice(2,1);
+        Matrice X = Matrice(2,1);//On utilise X[0] pour la position et X[1] pour la vitesse selon Ox
+        Matrice Y = Matrice(2,1);//On utilise Y[0] pour la position et Y[1] pour la vitesse selon Oy
         double theta0;
         double speed;
 };
