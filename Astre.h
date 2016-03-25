@@ -19,8 +19,12 @@ class Astre
         double Gettheta0() { return theta0; }
         void Settheta0(double val) { theta0 = val; }
         Matrice* GetX() {return &X;}
+        double GetX(int a) {return X.GetValue(a, 0);}
         Matrice* GetY() {return &Y;}
+        double GetY(int a) {return Y.GetValue(a, 0);}
+
         void Update(double t);
+        void Definir(int numero);
 
     protected:
     private:
