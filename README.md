@@ -1,10 +1,12 @@
 # Voyager-Simulation
 
 A faire : 
- - Changer les pos et speed en X et Y
+ - Comprendre le bug lorsqu'on laisse tourner longtemps
+ - Trouver les conditions initiales
+ - Mettre des vraies planetes (bmp...)
  - 
  
 Optimisation : 
- - Implementer +=
+ - Interface utilisateur (commander la vitesse, le zoom, relancer, etc)
  - Réecrire * - + de MAtrice en utilisant Setvalue
- - 
+
