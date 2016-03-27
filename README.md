@@ -8,5 +8,5 @@ A faire :
  
 Optimisation : 
  - Interface utilisateur (commander la vitesse, le zoom, relancer, etc)
- - Réecrire * - + de MAtrice en utilisant Setvalue
+ - Réecrire * - + de Matrice en utilisant Setvalue
 
