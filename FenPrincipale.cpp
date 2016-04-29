@@ -84,8 +84,8 @@ FenPrincipale::FenPrincipale()
       Sonde sonde(astres, 1);
 
       // load an image
-      QGraphicsItem *jupiter;
-      image.load("jupiter.bmp", 0, Qt::AutoColor);
+      //QGraphicsItem *jupiter;
+     // image.load("jupiter.bmp", 0, Qt::AutoColor);
       //jupiter = scene->addPixmap(image);
 
       /*QGraphicsItem *saturne;
@@ -105,7 +105,7 @@ FenPrincipale::FenPrincipale()
       soleil = scene->addPixmap(image);*/
     
     QGraphicsPixmapItem *jupiter = new QGraphicsPixmapItem(*(new QPixmap("jupiter.bmp")));
-    item->setFlags(QGraphicsItem::ItemIsMovable);
+    jupiter->setFlags(QGraphicsItem::ItemIsMovable);
       QTimeLine *timer = new QTimeLine(5000);
       timer->setFrameRange(0,100);
 
