@@ -103,7 +103,9 @@ FenPrincipale::FenPrincipale()
       QGraphicsItem *soleil;
       image.load("soleil.bmp", 0, Qt::AutoColor);
       soleil = scene->addPixmap(image);*/
-
+    
+    QGraphicsPixmapItem *jupiter = new QGraphicsPixmapItem(*(new QPixmap("jupiter.bmp")));
+    item->setFlags(QGraphicsItem::ItemIsMovable);
       QTimeLine *timer = new QTimeLine(5000);
       timer->setFrameRange(0,100);
 
