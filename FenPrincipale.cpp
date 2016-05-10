@@ -1,10 +1,10 @@
 #include "FenPrincipale.h"
 #include "FenPreferences.h"
 
-FenPrincipale::FenPrincipale() : soleil(new QGraphicsPixmapItem(*(new QPixmap("soleil.bmp")))),
-    terre(new QGraphicsPixmapItem(*(new QPixmap("terre.png")))),jupiter(new QGraphicsPixmapItem(*(new QPixmap("jupiter.jpg")))),
-    saturne(new QGraphicsPixmapItem(*(new QPixmap("saturne.jpg")))),uranus(new QGraphicsPixmapItem(*(new QPixmap("uranus.jpg")))),
-    sonde(new QGraphicsPixmapItem(*(new QPixmap("sonde.bmp"))))
+FenPrincipale::FenPrincipale() : soleil(new QGraphicsPixmapItem(*(new QPixmap("soleil.png")))),
+    terre(new QGraphicsPixmapItem(*(new QPixmap("terre.png")))),jupiter(new QGraphicsPixmapItem(*(new QPixmap("jupiter.png")))),
+    saturne(new QGraphicsPixmapItem(*(new QPixmap("saturne.png")))),uranus(new QGraphicsPixmapItem(*(new QPixmap("uranus.png")))),
+    sonde(new QGraphicsPixmapItem(*(new QPixmap("sonde.png"))))
 {
     fenetrePreferences = new FenPreferences;
     fenetrePreferences->setWindowTitle("Préférences");
