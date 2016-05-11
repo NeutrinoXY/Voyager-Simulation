@@ -159,14 +159,16 @@ void FenPrincipale::lancerSimulation()
     scene->addItem(saturne);
     scene->addItem(uranus);
     scene->addItem(sonde);
+    
+    soleil->setPos(-20,-20);
 
     for (int i=0;i<nbEtape;i++)
     {
-        animationTerre->setPosAt(i / (double)nbEtape, QPointF(zoom*astres[1].GetX(0),zoom*astres[1].GetY(0)));
-        animationJupiter->setPosAt(i / (double)nbEtape, QPointF(zoom*astres[2].GetX(0),zoom*astres[2].GetY(0)));
-        animationSaturne->setPosAt(i / (double)nbEtape, QPointF(zoom*astres[3].GetX(0),zoom*astres[3].GetY(0)));
-        animationUranus->setPosAt(i / (double)nbEtape, QPointF(zoom*astres[4].GetX(0),zoom*astres[4].GetY(0)));
-        animationSonde->setPosAt(i / (double)nbEtape, QPointF(zoom*ssonde->GetX(0,0),zoom*ssonde->GetY(0,0)));
+         animationTerre->setPosAt(i / (double)nbEtape, QPointF(-5+zoom*astres[1].GetX(0),-5+zoom*astres[1].GetY(0)));
+        animationJupiter->setPosAt(i / (double)nbEtape, QPointF(zoom*astres[2].GetX(0)-42,zoom*astres[2].GetY(0)-42));
+        animationSaturne->setPosAt(i / (double)nbEtape, QPointF(zoom*astres[3].GetX(0)-85,zoom*astres[3].GetY(0)-44));
+        animationUranus->setPosAt(i / (double)nbEtape, QPointF(zoom*astres[4].GetX(0)-20,zoom*astres[4].GetY(0)-20));
+        animationSonde->setPosAt(i / (double)nbEtape, QPointF(zoom*ssonde->GetX(0,0)-23,zoom*ssonde->GetY(0,0)-23));
         vitesseSonde[i]=sqrt(pow(ssonde->GetX(1,0),2)+pow(ssonde->GetY(1,0),2));
         t+=pas;
         for (int j=0; j<5; j++)
