@@ -17,6 +17,8 @@ class Sonde
         void Update(double h);
         double GetX(int i,int j) {return X.GetValue(i,j);};
         double GetY(int i,int j) {return Y.GetValue(i,j);};
+        void setVitesseX(double val){X.SetValue(1,0,val);};
+        void setVitesseY(double val){Y.SetValue(1,0,val);};
     protected:
     private:
         int nbAstres;
