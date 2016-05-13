@@ -3,55 +3,56 @@
 FenPreferences::FenPreferences(QWidget *parent) : QWidget(parent)
 {
     //bloc planètes
-    QLabel *labelPosIni1 = new QLabel("Position initiale");
-    QLabel *labelPosIni2 = new QLabel("Position initiale");
-    QLabel *labelPosIni3 = new QLabel("Position initiale");
-    QLabel *labelPosIni4 = new QLabel("Position initiale");
+    QLabel *labelPosIni1 = new QLabel("Angle initial (en degrés)");
+    QLabel *labelPosIni2 = new QLabel("Angle initial (en degrés)");
+    QLabel *labelPosIni3 = new QLabel("Angle initial (en degrés)");
+    QLabel *labelPosIni4 = new QLabel("Angle initial (en degrés)");
+    QLabel *labelVitIniX = new QLabel("Vitesse initiale en X");
+    QLabel *labelVitIniY = new QLabel("Vitesse initiale en Y");
 
-
-    posXT = new QSpinBox();
-    posYT = new QSpinBox();
+    spinBoxAngleTerre = new QSpinBox();
+    spinBoxAngleTerre->setRange(0,359);
     QFormLayout *terreLayout = new QFormLayout;
     terreLayout->addRow(labelPosIni1);
-    terreLayout->addRow("X :", posXT);
-    terreLayout->addRow("Y :", posYT);
+    terreLayout->addRow(spinBoxAngleTerre);
     QGroupBox *groupTerre = new QGroupBox("Terre");
     groupTerre->setLayout(terreLayout);
     groupTerre->setCheckable(true);
     groupTerre->setChecked(true);
+    connect(spinBoxAngleTerre,SIGNAL(valueChanged(int)),this, SLOT(setAngleTerre(int)));
 
-    posXJ = new QSpinBox();
-    posYJ = new QSpinBox();
+    spinBoxAngleJupiter = new QSpinBox();
+    spinBoxAngleJupiter->setRange(0,359);
     QFormLayout *jupiterLayout = new QFormLayout;
     jupiterLayout->addRow(labelPosIni2);
-    jupiterLayout->addRow("X :", posXJ);
-    jupiterLayout->addRow("Y :", posYJ);
+    jupiterLayout->addRow(spinBoxAngleJupiter);
     QGroupBox *groupJupiter = new QGroupBox("Jupiter");
     groupJupiter->setLayout(jupiterLayout);
     groupJupiter->setCheckable(true);
     groupJupiter->setChecked(true);
+    connect(spinBoxAngleJupiter,SIGNAL(valueChanged(int)),this, SLOT(setAngleJupiter(int)));
 
-    posXS = new QSpinBox();
-    posYS = new QSpinBox();
+    spinBoxAngleSaturne = new QSpinBox();
+    spinBoxAngleSaturne->setRange(0,359);
     QFormLayout *saturneLayout = new QFormLayout;
     saturneLayout->addRow(labelPosIni3);
-    saturneLayout->addRow("X :", posXS);
-    saturneLayout->addRow("Y :", posYS);
+    saturneLayout->addRow(spinBoxAngleSaturne);
     QGroupBox *groupSaturne = new QGroupBox("Saturne");
     groupSaturne->setLayout(saturneLayout);
     groupSaturne->setCheckable(true);
     groupSaturne->setChecked(true);
+    connect(spinBoxAngleSaturne,SIGNAL(valueChanged(int)),this, SLOT(setAngleSaturne(int)));
 
-    posXU = new QSpinBox();
-    posYU = new QSpinBox();
+    spinBoxAngleUranus = new QSpinBox();
+    spinBoxAngleUranus->setRange(0,359);
     QFormLayout *uranusLayout = new QFormLayout;
     uranusLayout->addRow(labelPosIni4);
-    uranusLayout->addRow("X :", posXU);
-    uranusLayout->addRow("Y :", posYU);
+    uranusLayout->addRow(spinBoxAngleUranus);
     QGroupBox *groupUranus = new QGroupBox("Uranus");
     groupUranus->setLayout(uranusLayout);
     groupUranus->setCheckable(true);
     groupUranus->setChecked(true);
+    connect(spinBoxAngleUranus,SIGNAL(valueChanged(int)),this, SLOT(setAngleUranus(int)));
 
     //bloc pas
     spinBoxPas = new QDoubleSpinBox();
@@ -90,13 +91,21 @@ FenPreferences::FenPreferences(QWidget *parent) : QWidget(parent)
     groupAnimation->setLayout(animationLayout);
 
     //bloc conditions initiales de la sonde
-    posX = new QSpinBox();
-    posY = new QSpinBox();
-    vit = new QSpinBox();
+    vitX = new QDoubleSpinBox();
+    vitY = new QDoubleSpinBox();
+    vitX->setDecimals(1);
+    vitX->setSingleStep(0.1);
+    vitX->setValue(0);
+    vitY->setDecimals(1);
+    vitY->setSingleStep(0.1);
+    vitY->setValue(9);
+    connect(vitX,SIGNAL(valueChanged(double)),this, SLOT(setVitesseX(double)));
+    connect(vitY,SIGNAL(valueChanged(double)),this, SLOT(setVitesseY(double)));
     QFormLayout *condLayout = new QFormLayout;
-    condLayout->addRow("X :", posX);
-    condLayout->addRow("Y :", posY);
-    condLayout->addRow("Vitesse :", vit);
+    condLayout->addRow(labelVitIniX);
+    condLayout->addRow(vitX);
+    condLayout->addRow(labelVitIniY);
+    condLayout->addRow(vitY);
     QGroupBox *groupPosition = new QGroupBox("Sonde");
     groupPosition->setLayout(condLayout);
 
@@ -182,4 +191,64 @@ void FenPreferences::setPas(double val)
 FenPreferences::~FenPreferences()
 {
 
+}
+
+double FenPreferences::getAngleTerre()
+{
+    return angleTerre;
+}
+
+double FenPreferences::getAngleJupiter()
+{
+    return angleJupiter;
+}
+
+double FenPreferences::getAngleSaturne()
+{
+    return angleSaturne;
+}
+
+double FenPreferences::getAngleUranus()
+{
+    return angleUranus;
+}
+
+void FenPreferences::setAngleTerre(int val)
+{
+    angleTerre=val*M_PI/180;
+}
+
+void FenPreferences::setAngleJupiter(int val)
+{
+    angleJupiter=val*M_PI/180;
+}
+
+void FenPreferences::setAngleSaturne(int val)
+{
+    angleSaturne=val*M_PI/180;
+}
+
+void FenPreferences::setAngleUranus(int val)
+{
+    angleUranus=val*M_PI/180;
+}
+
+double FenPreferences::getVitesseX()
+{
+    return vitesseX;
+}
+
+double FenPreferences::getVitesseY()
+{
+    return vitesseY;
+}
+
+void FenPreferences::setVitesseX(double val)
+{
+    vitesseX=val;
+}
+
+void FenPreferences::setVitesseY(double val)
+{
+    vitesseY=val;
 }

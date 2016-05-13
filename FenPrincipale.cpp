@@ -9,7 +9,6 @@ FenPrincipale::FenPrincipale() : soleil(new QGraphicsPixmapItem(*(new QPixmap("s
     fenetrePreferences = new FenPreferences;
     fenetrePreferences->setWindowTitle("Préférences");
     fenetrePreferences->setWindowIcon(QIcon("setting"));
-    fenetrePreferences->setFixedSize(400,500);
     //fenetrePreferences->setWindowFlags(Qt::Tool);
 
     //menus
@@ -54,10 +53,9 @@ FenPrincipale::FenPrincipale() : soleil(new QGraphicsPixmapItem(*(new QPixmap("s
     toolBarAffichage->setFloatable(false);
     toolBarAffichage->setMovable(false);
 
-    //statusbar    
+    //statusbar
     statusBar->addWidget(progressBar);
     statusBar->addWidget(vitesseSondeLabel);
-    statusBar->addWidget(zoomLabel);
     setStatusBar(statusBar);
 
     //zone centrale
@@ -93,15 +91,15 @@ void FenPrincipale::lancerSimulation()
     double pas = fenetrePreferences->getPas();
     int nbEtape = fenetrePreferences->getNbrEtapes();
     int dureeAnimation = fenetrePreferences->getDureeAnimation();
-
     astres = new Astre[5];
     ssonde = new Sonde(astres, 1);
-
+    ssonde->setVitesseX(fenetrePreferences->getVitesseX());
+    ssonde->setVitesseY(fenetrePreferences->getVitesseY());
     vitesseSonde = (double*) calloc(nbEtape,sizeof(*vitesseSonde));
-    terreEllipse = new QGraphicsEllipseItem(-1*zoom+32,-1*zoom+32,1*zoom*2,1*zoom*2);
-    jupiterEllipse = new QGraphicsEllipseItem(-5.20336301*zoom+32,-5.20336301*zoom+32,5.20336301*zoom*2,5.20336301*zoom*2);
-    saturneEllipse = new QGraphicsEllipseItem(-9.554909*zoom+32,-9.554909*zoom+32,9.554909*zoom*2,9.554909*zoom*2);
-    uranusEllipse = new QGraphicsEllipseItem(-19.189165*zoom+32,-19.189165*zoom+32,19.189165*zoom*2,19.189165*zoom*2);
+    terreEllipse = new QGraphicsEllipseItem(-1*zoom,-1*zoom,1*zoom*2,1*zoom*2);
+    jupiterEllipse = new QGraphicsEllipseItem(-5.20336301*zoom,-5.20336301*zoom,5.20336301*zoom*2,5.20336301*zoom*2);
+    saturneEllipse = new QGraphicsEllipseItem(-9.554909*zoom,-9.554909*zoom,9.554909*zoom*2,9.554909*zoom*2);
+    uranusEllipse = new QGraphicsEllipseItem(-19.189165*zoom,-19.189165*zoom,19.189165*zoom*2,19.189165*zoom*2);
     timer = new QTimeLine(dureeAnimation);
     timer->setFrameRange(0, 100);
     timer->setUpdateInterval(17);
@@ -142,6 +140,10 @@ void FenPrincipale::lancerSimulation()
     astres[2].Definir(5);
     astres[3].Definir(6);
     astres[4].Definir(7);
+    astres[1].Settheta0(fenetrePreferences->getAngleTerre());
+    astres[2].Settheta0(fenetrePreferences->getAngleJupiter());
+    astres[3].Settheta0(fenetrePreferences->getAngleSaturne());
+    astres[4].Settheta0(fenetrePreferences->getAngleUranus());
 
     terreEllipse->setPen(QPen(Qt::white,3));
     jupiterEllipse->setPen(QPen(Qt::white,3));
@@ -159,12 +161,12 @@ void FenPrincipale::lancerSimulation()
     scene->addItem(saturne);
     scene->addItem(uranus);
     scene->addItem(sonde);
-    
+
     soleil->setPos(-20,-20);
 
     for (int i=0;i<nbEtape;i++)
     {
-         animationTerre->setPosAt(i / (double)nbEtape, QPointF(-5+zoom*astres[1].GetX(0),-5+zoom*astres[1].GetY(0)));
+        animationTerre->setPosAt(i / (double)nbEtape, QPointF(-5+zoom*astres[1].GetX(0),-5+zoom*astres[1].GetY(0)));
         animationJupiter->setPosAt(i / (double)nbEtape, QPointF(zoom*astres[2].GetX(0)-42,zoom*astres[2].GetY(0)-42));
         animationSaturne->setPosAt(i / (double)nbEtape, QPointF(zoom*astres[3].GetX(0)-85,zoom*astres[3].GetY(0)-44));
         animationUranus->setPosAt(i / (double)nbEtape, QPointF(zoom*astres[4].GetX(0)-20,zoom*astres[4].GetY(0)-20));

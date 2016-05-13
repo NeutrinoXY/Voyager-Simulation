@@ -54,7 +54,6 @@ class FenPrincipale : public QMainWindow
         QTimeLine *timer; //durée de l'animation
         QProgressBar *progressBar = new QProgressBar;
         QLabel *vitesseSondeLabel = new QLabel;
-        QLabel *zoomLabel = new QLabel;
         double *vitesseSonde;
 };
 #endif
