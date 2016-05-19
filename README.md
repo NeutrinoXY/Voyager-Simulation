@@ -1,9 +1,9 @@
 # Voyager-Simulation
 
 A faire : 
- - Comprendre le bug lorsqu'on laisse tourner longtemps
+ - Corriger la memory leak
  - Trouver les conditions initiales
- - Mettre des vraies planetes (bmp...)
+ - verifier le centrage l'image des planetes/de la sonde
  - 
  
 Optimisation : 
