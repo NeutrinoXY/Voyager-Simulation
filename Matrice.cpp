@@ -3,18 +3,21 @@
 
 using namespace std;
 
-
 Matrice::Matrice(int a, int b)
 {
+	//Allocation dynamique de la matrice
     double** m = new double*[a];
     for(int i=0; i<a ; i++)
     {
         m[i] = new double[b];
 
         for(int j=0; j<b ; j++)
+        {
             m[i][j]=0;
-
+        }
     }
+
+    //Mise a jour des variables internes à la matrice
     matrix = m;
     nl = a;
     nc = b;
@@ -22,9 +25,10 @@ Matrice::Matrice(int a, int b)
 
 Matrice::~Matrice()
 {
-
+    //dtor
 }
 
+//Déclaration de l'opération * entre les matrices
 Matrice operator*(Matrice A, Matrice B)
 {
     int nlA, ncA, nlB, ncB;
@@ -32,7 +36,7 @@ Matrice operator*(Matrice A, Matrice B)
     B.GetSize(nlB, ncB);
     Matrice result(nlA, ncB);
 
-    if(ncA!=nlB)
+    if(ncA!=nlB) // On ne peut pas multiplier n'importe quelles matrices
     {
         cout << "* Impossible" << endl;
         return result;
@@ -54,7 +58,6 @@ Matrice operator*(Matrice A, Matrice B)
                     m[i][j]+=(A.GetValue(i,k))*(B.GetValue(k,j));}
 
         result.Set(m);
-
         return result;
     }
 }
