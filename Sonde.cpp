@@ -57,7 +57,12 @@ void Sonde::Update(double h)
     for(int i=0; i<GetnbAstres(); i++)
     {
     	//Ceci est l'influence de l'astre i sur la sonde avec l'approximation de la methode d'Euler
-        C.SetValue(1,0,h*G*(astre[i].Getmass())/(pow((*d).GetValue(i,0),3))); // (C = pas*G*M/(R^3) )
+        if(astre[i].Getmass()){
+            C.SetValue(1,0,h*G*(astre[i].Getmass())/(pow((*d).GetValue(i,0),3))); // (C = pas*G*M/(R^3) )
+        }
+        else {
+            C.SetValue(1,0,0);
+        }
         Xi = astre[i].GetX();
         Yi = astre[i].GetY();
 
