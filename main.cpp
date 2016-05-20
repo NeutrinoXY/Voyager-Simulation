@@ -1,110 +1,69 @@
+#ifdef __cplusplus
+    #include <cstdlib>
+#else
+    #include <stdlib.h>
+#endif
 #include <iostream>
-#include <stdlib.h>
-
+#include "Astre.h"
 #include "Sonde.h"
 
-using namespace std;
+#define ZOOM 25
 
-int main()
+
+/***************************************/
+/*                                     */
+/*                                     */
+/*                                     */
+/*   PLANETES ACTIVES :                */
+/*       0 ,3, 5, 6, 7                 */
+/*                                     */
+/*                                     */
+/*                                     */
+/***************************************/
+
+int main ( int argc, char** argv )
 {
-    //cout << "Hello world!" << endl;
-    Matrice A(2,2), B(2,1), C(2,1);
-    Astre* astres = new Astre[1];
+
+    while(1){
+
+    double a=0;
+    double t=0, pas=0.0001, distance = 0, dmin = 100;
+
+    Astre* astres = new Astre[5];
+    astres[0].Definir(0);
+    astres[1].Definir(3);
+    astres[2].Definir(5);
+    astres[3].Definir(6);
+    astres[4].Definir(7);
 
 
-    //cout<<"lol"<<endl;
-    Sonde sonde(astres, 1);
-
-    //cout<<sonde.Gett()<<endl;
-    //cout<<sonde.GetnbAstres()<<endl;
-
-    A.SetValue(0,0,1);    A.SetValue(0,1,4);
-    A.SetValue(1,0,1);    A.SetValue(1,1,1);
-
-    B.SetValue(0,0,4);    /*B.SetValue(0,1,1);*/
-    B.SetValue(1,0,1);   /* B.SetValue(1,1,0);*/
-
-    C = A*B;
+    Sonde sonde(astres, 5);
 
 
-    //cout << "A : " << endl << A.GetValue(0,0) << " " << A.GetValue(0,1) << endl;
-    //cout << A.GetValue(1,0) << " " << A.GetValue(1,1) << endl << endl;
-    //cout << "B : " << endl << B.GetValue(0,0) << endl << B.GetValue(1,0) << endl << endl;
-    //cout << "C : " << endl << C.GetValue(0,0) << " " << C.GetValue(1,0) << endl << endl;
+    cout<<"New Theta0 "<<endl;
+    cin >> a;
+    astres[2].Settheta0(a);
 
-    /*/for(int t=0; t<2500; t++)
-    {
-        //system("cls");
-        cout << "O"<<endl;
-        Matrice** d;
-        d = sonde.Getd();
-        for (int i=0; i<(**d).GetValue(0,0)/2; i++)
-            cout << " ";
 
-        cout << "(°;...;°)" << endl;
-        sonde.Update(0.001);
-    }/*/
-    for(int t=0; t<250000000; t++)
-    {
-        if (!(t%1000))
-        {
-            system("cls");
-            cout << sonde.GetX(0,0) << "   " << sonde.GetX(1,0) << endl << sonde.GetY(0,0) << "   " << sonde.GetY(1,0) << endl;
-            for(int i=0; i<60; i++)
-            {
-                if (i==32)
-                {
-                    if(i==32+(int)sonde.GetY(0,0)/2)
-                    {
-                        for(int j=0; j<237; j++)
-                        {
-                            if (j==118+(int)sonde.GetX(0,0))
-                                cout << "X";
-                            else if (j==118)
-                                cout << "O";
-                            else if (j > 118 && j > 118+(int)sonde.GetX(0,0))
-                            {
-                                cout << endl;
-                                j = 237;
-                            }
-                            else
-                                cout << " ";
-                        }
-                    }
-                    else
-                        for(int j=0; j<236; j++)
-                        {
-                            if (j==118)
-                            {
-                                cout << "O" << endl;
-                            }
-                            else
-                                cout << " ";
-                        }
-                }
-                else if (i==32+(int)sonde.GetY(0,0)/2)
-                {
-                    cout << endl;
-                    for(int j=0; j<236; j++)
-                    {
-                        if (j==118+(int)sonde.GetX(0,0))
-                            cout << "X";
-                        else
-                            cout << " ";
-                    }
-                }
-                else
-                {
-                    cout << endl;
-                    /*/for(int j=0; j<236; j++)
-                        cout << " ";
-                    /*/
-                }
-            }
+
+    // program main loop
+    bool done = false;
+    while (distance < 20){
+        t+=pas;
+        for (int i=0; i<5; i++){
+            astres[i].Update(t);
         }
-    sonde.Update(0.0001);
-    if (!(t%1000000000000))
-        cin.ignore(); // Pause
+        sonde.Update(pas);
+
+        distance = sqrt(pow(sonde.GetX(0,0)-astres[2].GetX(0),2) + pow(sonde.GetY(0,0)-astres[2].GetY(0),2));
+        if(distance<dmin){
+            dmin=distance;
+        }
+
+    } // end main loop
+
+    cout<<dmin<<endl;
+
     }
 
     return 0;
