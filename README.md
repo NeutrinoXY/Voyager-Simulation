@@ -1,10 +1,4 @@
-# Voyager-Simulation
+# "test-2D"
 
-A faire : 
- - Definir les masses, temps, distances de référence
- - 
- 
-Optimisation : 
- - Implementer +=
- - Réecrire * - + de MAtrice en utilisant Setvalue
- - 
+Code console sans Qt et sans SDL.
+Il permet de faire des simulations rapide pour tester les angles initiaux par exemple.
