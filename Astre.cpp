@@ -1,6 +1,6 @@
 #include "Astre.h"
 
-Astre::Astre()
+Astre::Astre() : X(Matrice(2,1)), Y(Matrice(2,1))
 {
     mass = 333054.253182; // Par rapport a la Terre
 
@@ -27,7 +27,7 @@ void Astre::Definir(int numero)
          case 3: //TERRE
             mass = 0;
             radius = 1;
-            theta0 = 0;
+            theta0 = 1;
             speed = 1*(2*M_PI);
             break;
 
@@ -35,7 +35,7 @@ void Astre::Definir(int numero)
          case 5: //JUPITER
             mass = 317.8;
             radius = 5.20336301;
-            theta0 = 2;
+            theta0 = 1.6265;
             speed = radius*(2*M_PI)/11.862;
             break;
 
@@ -50,7 +50,7 @@ void Astre::Definir(int numero)
         case 7: //URANUS
             mass = 14.536;
             radius = 19.189165;
-            theta0 = 2;
+            theta0 = 2.142;
             speed = radius*(2*M_PI)/84.016846;
             break;
 
