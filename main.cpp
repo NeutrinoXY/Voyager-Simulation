@@ -27,7 +27,7 @@ int main ( int argc, char** argv )
     while(1){
 
     double a=0;
-    double t=0, pas=0.00001, distance = 0, dmin = 100;
+    double t=0, pas=0.0001, distance = 0, dmin = 100;
 
     Astre* astres = new Astre[5];
     astres[0].Definir(0);
@@ -38,6 +38,7 @@ int main ( int argc, char** argv )
 
 
     Sonde sonde(astres, 5);
+
 
     cout<<"New Theta0 "<<endl;
     cin >> a;
