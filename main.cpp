@@ -8,6 +8,6 @@ int main(int argc, char *argv[])
     FenPrincipale *fenetrePrincipale = new FenPrincipale;
     fenetrePrincipale->setWindowTitle("Projet Sonde Voyager");
     fenetrePrincipale->setWindowIcon(QIcon("nasa.png"));
-    fenetrePrincipale->showMaximized();
+    fenetrePrincipale->show();
     return app.exec();
 }

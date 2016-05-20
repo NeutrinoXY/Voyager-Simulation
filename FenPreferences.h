@@ -12,13 +12,13 @@ public:
     FenPreferences(QWidget *parent = 0);
     ~FenPreferences();
     int getZoom();
-    int getDureeAnimation();
-    int getNbrEtapes();
     double getPas();
     double getAngleTerre();
     double getAngleJupiter();
     double getAngleSaturne();
     double getAngleUranus();
+    double getPositionX();
+    double getPositionY();
     double getVitesseX();
     double getVitesseY();
 
@@ -26,40 +26,41 @@ signals:
 
 public slots:
     void setZoom(int val);
-    void setDureeAnimation(int val);
-    void setNbrEtapes(int val);
     void setPas(double val);
-    void setAngleTerre(int val);
-    void setAngleJupiter(int val);
-    void setAngleSaturne(int val);
-    void setAngleUranus(int val);
+    void setAngleTerre(double val);
+    void setAngleJupiter(double val);
+    void setAngleSaturne(double val);
+    void setAngleUranus(double val);
+    void setPositionX(double val);
+    void setPositionY(double val);
     void setVitesseX(double val);
     void setVitesseY(double val);
 
 private:
-        QSpinBox *spinBoxAngleTerre;
-        QSpinBox *spinBoxAngleJupiter;
-        QSpinBox *spinBoxAngleSaturne;
-        QSpinBox *spinBoxAngleUranus;
+        QDoubleSpinBox *spinBoxAngleTerre;
+        QDoubleSpinBox *spinBoxAngleJupiter;
+        QDoubleSpinBox *spinBoxAngleSaturne;
+        QDoubleSpinBox *spinBoxAngleUranus;
         QDoubleSpinBox *spinBoxPas;
         QSpinBox *spinBoxZoom;
+        QDoubleSpinBox *posX;
+        QDoubleSpinBox *posY;
         QDoubleSpinBox *vitX;
         QDoubleSpinBox *vitY;
-        QSpinBox *spinBoxDureeAnimation;
-        QSpinBox *spinBoxNbrEtapes;
         QRadioButton *euler;
         QRadioButton *runge;
+
         // paramètres par défaut
         int zoom=20;
-        int dureeAnimation=20000;
-        int nbrEtapes=100000;
         double pas=0.0001;
         double angleTerre=0;
         double angleJupiter=0;
         double angleSaturne=0;
         double angleUranus=0;
+        double positionX=1;
+        double positionY=0;
         double vitesseX=0;
-        double vitesseY=9;
+        double vitesseY=3;
 };
 
 #endif // FENPREFERENCES_H
