@@ -28,8 +28,8 @@
 
 int main ( int argc, char** argv )
 {
-    int a=0;
-    double t=0, pas=0.00005, tampon=0, zoom=25;
+    double a=0;
+    double t=0, pas=0.00005, tampon=0, zoom=25, dmin=100, distance;
 
     Astre* astres = new Astre[5];
     astres[0].Definir(0);
@@ -70,17 +70,17 @@ int main ( int argc, char** argv )
                 ligne.erase(0,13);
                 istringstream i(ligne);
                 i >> a;
-                //astres[1].Settheta0(0);
+                astres[1].Settheta0(a);
                 cerr << "angle de la Terre modifié" << endl;
             }
 
                 found = ligne.find("angleJupiter = ");
             if (found!=string::npos){
                 ligne.erase(0,15);
-                istringstream i(ligne);
-                i >> a;
+                cerr << ligne << endl;
+                a = strtod(ligne.c_str(), NULL);
                 astres[2].Settheta0(a);
-                cerr << "angle de Jupiter modifié" << endl;
+                cerr << "angle de Jupiter modifié " << endl;
             }
 
                 found = ligne.find("angleSaturne = ");
@@ -224,9 +224,11 @@ int main ( int argc, char** argv )
     // program main loop
     bool done = false;
     while (!done){
+
+
+
         dstrect.x =   zoom*  sonde.GetX(0,0)+ (screen->w - sondeBMP->w) / 2;
         dstrect.y =   zoom*  sonde.GetY(0,0)+ (screen->h - sondeBMP->h) / 2;
-
 
 
 
@@ -294,6 +296,8 @@ int main ( int argc, char** argv )
         }
         sonde.Update(pas);
     } // end main loop
+
+
 
     // free loaded bitmap
     SDL_FreeSurface(sondeBMP);
