@@ -23,8 +23,7 @@ class Sonde
         Astre* astre;
         double t;
         Matrice* d;
-        Matrice X = Matrice(2,1);
+        Matrice X = Matrice(2,1);//On utilise X[0] pour la position et X[1] pour la vitesse selon Ox
         Matrice Y = Matrice(2,1);
 };
-
 #endif // SONDE_H
