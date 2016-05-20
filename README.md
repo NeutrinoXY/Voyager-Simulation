@@ -1,12 +1,4 @@
-# Voyager-Simulation
+# "SDL-tests"
 
-A faire : 
- - Comprendre le bug lorsqu'on laisse tourner longtemps
- - Trouver les conditions initiales
- - Mettre des vraies planetes (bmp...)
- - 
- 
-Optimisation : 
- - Interface utilisateur (commander la vitesse, le zoom, relancer, etc)
- - Réecrire * - + de Matrice en utilisant Setvalue
-
+Comprend tout la partie SDL du projet
+Fonctionne désormais à l'aide d'un document texte .txt a mettre dans le meme dossier que l'exeutable (ou/et le dossier du projet)
