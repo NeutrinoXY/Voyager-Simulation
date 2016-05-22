@@ -2,9 +2,9 @@
 #include "Astre.h"
 #include <iostream>
 #include <math.h>
-#define Masse 5.9736Ã—1000000000000000000000000
+#define Masse 5.9736×1000000000000000000000000
 #define Distance 149600000000      //distance Terre Soleil
-#define Temps 60*60*24*365.25      //annÃ©e
+#define Temps 60*60*24*365.25      //année
 #define G  0.00011858656632 //
 
 
@@ -56,17 +56,18 @@ void Sonde::Update(double h)
 
     for(int i=0; i<GetnbAstres(); i++)
     {
-    	//Ceci est l'influence de l'astre i sur la sonde avec l'approximation de la methode d'Euler
+        //Ceci est l'influence de l'astre i sur la sonde avec l'approximation de la methode d'Euler
         if(astre[i].Getmass()){
             C.SetValue(1,0,h*G*(astre[i].Getmass())/(pow((*d).GetValue(i,0),3))); // (C = pas*G*M/(R^3) )
         }
-        else {
+        else{
             C.SetValue(1,0,0);
         }
+
         Xi = astre[i].GetX();
         Yi = astre[i].GetY();
 
-		//On l'ajoute Ã  la position actuelle et Ã  l'influence des autres astres
+		//On l'ajoute à la position actuelle et à l'influence des autres astres
         Xnew = Xnew + (C*(*Xi-X));
         Ynew = Ynew + (C*(*Yi-Y));
     }

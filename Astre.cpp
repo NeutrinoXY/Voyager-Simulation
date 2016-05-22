@@ -4,7 +4,7 @@ Astre::Astre() : X(Matrice(2,1)), Y(Matrice(2,1))
 {
     mass = 333054.253182; // Par rapport a la Terre
 
-	// Le Soleil ne se dÃ©place pas
+	// Le Soleil ne se déplace pas
 	radius = 0;
     theta0 = 0;
     speed = 0;
@@ -17,7 +17,7 @@ void Astre::Definir(int numero)
       {
          case 0: // SOLEIL
             mass = 333054.253182; // Par rapport a la Terre
-            // Le Soleil ne se dÃ©place pas
+            // Le Soleil ne se déplace pas
             radius = 0;
             theta0 = 0;
             speed = 0;
@@ -27,7 +27,7 @@ void Astre::Definir(int numero)
          case 3: //TERRE
             mass = 0;
             radius = 1;
-            theta0 = 1;
+            theta0 = 0;
             speed = 1*(2*M_PI);
             break;
 
@@ -57,7 +57,7 @@ void Astre::Definir(int numero)
 
          default:
             mass = 333054.253182; // Par rapport a la Terre
-            // Le Soleil ne se dÃ©place pas
+            // Le Soleil ne se déplace pas
             radius = 0;
             theta0 = 0;
             speed = 0;

@@ -17,7 +17,7 @@ Matrice::Matrice(int a, int b)
         }
     }
 
-    //Mise a jour des variables internes Ã  la matrice
+    //Mise a jour des variables internes à la matrice
     matrix = m;
     nl = a;
     nc = b;
@@ -28,7 +28,7 @@ Matrice::~Matrice()
     //dtor
 }
 
-//DÃ©claration de l'opÃ©ration * entre les matrices
+//Déclaration de l'opération * entre les matrices
 Matrice operator*(Matrice A, Matrice B)
 {
     int nlA, ncA, nlB, ncB;
