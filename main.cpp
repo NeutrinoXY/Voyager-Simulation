@@ -26,10 +26,39 @@
 /*                                     */
 /***************************************/
 
+void cercle(long const rayon, long const x, long const y, SDL_Surface *const ecran)
+{
+   double const pi = 3.141592;
+   double const pixels = pi*2*rayon;
+   double compteur = 0.0;
+   long coups = 0;
+   SDL_Rect position = {
+                          0
+                       };
+
+   while (coups < pixels)
+   {
+      SDL_Surface *rectangle = SDL_CreateRGBSurface (SDL_HWSURFACE,1,1,32,0,0,0,0);
+      if (rectangle != NULL)
+      {
+         SDL_FillRect(rectangle, NULL, SDL_MapRGB(ecran->format, 255, 255, 255));
+         position.x = x+rayon* cos(compteur * pi / 180);
+         position.y = y+rayon* sin(compteur * pi / 180);
+         SDL_BlitSurface(rectangle, NULL, ecran, &position);
+         SDL_FreeSurface(rectangle), rectangle = NULL;
+      }
+
+      compteur += 360/pixels;
+      coups ++;
+   }
+}
+
+
 int main ( int argc, char** argv )
 {
-    double a=0;
-    double t=0, pas=0.00005, tampon=0, zoom=25, dmin=100, distance;
+    int C=0, I=0;
+    double t=0, pas0, pas=0.00005, tampon=0, zoom=25, zoom0=25, dmin=100, distance, a;
+    double ancienX=0, ancienY=0, taille=10;
 
     Astre* astres = new Astre[5];
     astres[0].Definir(0);
@@ -44,7 +73,7 @@ int main ( int argc, char** argv )
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ifstream fichier("donnees.txt", ios::in);  // on ouvre en lecture
 
-    if(fichier)  // si l'ouverture a fonctionnÃ©
+    if(fichier)  // si l'ouverture a fonctionné
     {
         string ligne;
         while(getline(fichier, ligne))  // tant que l'on peut mettre la ligne dans "contenu"
@@ -53,16 +82,17 @@ int main ( int argc, char** argv )
             if (found!=string::npos){
                 ligne.erase(0,7);
                 istringstream i(ligne);
-                i >> zoom;
-                cerr << "zoom modifiÃ©" << endl;
+                i >> zoom0;
+                cerr << "zoom0 modifié" << endl;
             }
 
                 found = ligne.find("pas = ");
             if (found!=string::npos){
                 ligne.erase(0,6);
                 istringstream i(ligne);
-                i >> pas;
-                cerr << "pas modifiÃ©" << endl;
+                i >> pas0;
+                pas=pas0;
+                cerr << "pas0 modifié" << endl;
             }
 
                 found = ligne.find("angleTerre = ");
@@ -71,7 +101,7 @@ int main ( int argc, char** argv )
                 istringstream i(ligne);
                 i >> a;
                 astres[1].Settheta0(a);
-                cerr << "angle de la Terre modifiÃ©" << endl;
+                cerr << "angle de la Terre modifié" << endl;
             }
 
                 found = ligne.find("angleJupiter = ");
@@ -80,7 +110,7 @@ int main ( int argc, char** argv )
                 cerr << ligne << endl;
                 a = strtod(ligne.c_str(), NULL);
                 astres[2].Settheta0(a);
-                cerr << "angle de Jupiter modifiÃ© " << endl;
+                cerr << "angle de Jupiter modifié " << endl;
             }
 
                 found = ligne.find("angleSaturne = ");
@@ -89,7 +119,7 @@ int main ( int argc, char** argv )
                 istringstream i(ligne);
                 i >> a;
                 astres[3].Settheta0(a);
-                cerr << "angle de Saturne modifiÃ©" << endl;
+                cerr << "angle de Saturne modifié" << endl;
             }
 
                 found = ligne.find("angleUranus = ");
@@ -98,7 +128,7 @@ int main ( int argc, char** argv )
                 istringstream i(ligne);
                 i >> a;
                 astres[4].Settheta0(a);
-                cerr << "angle d'Uranus modifiÃ©" << endl;
+                cerr << "angle d'Uranus modifié" << endl;
             }
 
                 found = ligne.find("positionX = ");
@@ -107,7 +137,7 @@ int main ( int argc, char** argv )
                 istringstream i(ligne);
                 i >> a;
                 sonde.SetX(0,0,a);
-                cerr << "positionX modifiÃ©" << endl;
+                cerr << "positionX modifié" << endl;
             }
 
                 found = ligne.find("positionY = ");
@@ -116,7 +146,7 @@ int main ( int argc, char** argv )
                 istringstream i(ligne);
                 i >> a;
                 sonde.SetY(0,0,a);
-                cerr << "positionY modifiÃ©" << endl;
+                cerr << "positionY modifié" << endl;
             }
 
                 found = ligne.find("vitesseX = ");
@@ -125,7 +155,7 @@ int main ( int argc, char** argv )
                 istringstream i(ligne);
                 i >> a;
                 sonde.SetX(1,0,a);
-                cerr << "vitesseX modifiÃ©" << endl;
+                cerr << "vitesseX modifié" << endl;
             }
 
                 found = ligne.find("vitesseY = ");
@@ -134,7 +164,7 @@ int main ( int argc, char** argv )
                 istringstream i(ligne);
                 i >> a;
                 sonde.SetY(1,0,a);
-                cerr << "vitesseY modifiÃ©" << endl;
+                cerr << "vitesseY modifié" << endl;
             }
         }
 
@@ -144,7 +174,15 @@ int main ( int argc, char** argv )
             cerr << "Impossible d'ouvrir le fichier !" << endl;
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+    SDL_Surface *rectangle = NULL;
+    SDL_Rect position;
+    SDL_Rect trajectoire[2000];
+    SDL_Rect approximation[500];
 
+    for(int i=0;i<100;i++){
+        trajectoire[i].x=10000000;
+        trajectoire[i].y=10000000;
+    }
 
     // initialize SDL video
     if ( SDL_Init( SDL_INIT_VIDEO ) < 0 )
@@ -200,12 +238,16 @@ int main ( int argc, char** argv )
         printf("Unable to load bitmap: %s\n", SDL_GetError());
         return 1;
     }
+
     SDL_Surface* uranus = SDL_LoadBMP("uranus.bmp");
     if (!uranus)
     {
         printf("Unable to load bitmap: %s\n", SDL_GetError());
         return 1;
     }
+
+
+    rectangle = SDL_CreateRGBSurface(SDL_HWSURFACE, 2, 2, 32, 0, 0, 0, 0);
 
 
     // centre the bitmap on screen
@@ -217,33 +259,73 @@ int main ( int argc, char** argv )
     SDL_Rect dstrect7;
 
 
-    dstrect2.x = (screen->w - soleil->w) / 2;
-    dstrect2.y = (screen->h - soleil->h) / 2;
 
-  SDL_Delay(500);
+
+    SDL_Delay(500);
+
+
     // program main loop
     bool done = false;
     while (!done){
 
 
+        I++;
+        distance = sqrt(pow(sonde.GetX(0,0)-astres[2].GetX(0),2) + pow(sonde.GetY(0,0)-astres[2].GetY(0),2));
+        C = 50*(2-distance);
+        if(C<0) C=0;
+        else if(C>50) C=50;
+        else {
+            //if(!(I%(100-C))) SDL_Delay(1);
+        }
 
-        dstrect.x =   zoom*  sonde.GetX(0,0)+ (screen->w - sondeBMP->w) / 2;
-        dstrect.y =   zoom*  sonde.GetY(0,0)+ (screen->h - sondeBMP->h) / 2;
+        C*=2;
+
+        pas=pas0/(2-distance);
+        if(pas>pas0) pas=pas0;
+        if(pas<0) pas=pas0;
+
+        zoom = 50*zoom0*pow(1.2-distance,3);
+        if(zoom<zoom0) zoom=zoom0;
+
+        if(!(I%3000)&&I/3000<2000){
+            trajectoire[I/3000].x=sonde.GetX(0,0)*1000;
+            trajectoire[I/3000].y=sonde.GetY(0,0)*1000;
+            taille++;
+        }
+
+        double x=sonde.GetX(0,0), X=sonde.GetX(1,0), XX=(X-ancienX)/pas, y=sonde.GetY(0,0), Y=sonde.GetY(1,0), YY=(Y-ancienY)/pas;
+        ancienX=X;
+        ancienY=Y;
+        for(int i=0; i<500; i++){
+            approximation[i].x=1000*(x+i*X/80+i*i*XX/13500);
+            approximation[i].y=1000*(y+i*Y/80+i*i*YY/13500);
+        }
 
 
 
-        dstrect3.x = (screen->w - terre->w) / 2 +   zoom*  astres[1].GetX(0);
-        dstrect3.y = (screen->h - terre->h) / 2 +   zoom*  astres[1].GetY(0);
 
-        dstrect5.x = (screen->w - jupiter->w) / 2 +   zoom*  astres[2].GetX(0);
-        dstrect5.y = (screen->h - jupiter->h) / 2 +   zoom*  astres[2].GetY(0);
 
-        dstrect6.x = (screen->w - saturne->w) / 2 +   zoom*  astres[3].GetX(0);
-        dstrect6.y = (screen->h - saturne->h) / 2 +   zoom*  astres[3].GetY(0);
 
-        dstrect7.x = (screen->w - uranus->w) / 2 +   zoom*  astres[4].GetX(0);
-        dstrect7.y = (screen->h - uranus->h) / 2 +   zoom*  astres[4].GetY(0);
 
+
+
+        dstrect.x = screen->w/2 - zoom*  C*sonde.GetX(0,0)/100.0 - sondeBMP->w/2 + zoom*  sonde.GetX(0,0);
+        dstrect.y = screen->h/2 - zoom*  C*sonde.GetY(0,0)/100.0 - sondeBMP->h/2 + zoom*  sonde.GetY(0,0);
+
+        dstrect2.x = screen->w/2 - zoom*  C*sonde.GetX(0,0)/100.0 - soleil->w/2;
+        dstrect2.y = screen->h/2 - zoom*  C*sonde.GetY(0,0)/100.0 - soleil->h/2;
+
+        dstrect3.x = screen->w/2 - zoom*  C*sonde.GetX(0,0)/100.0 - terre->w/2 +   zoom*  astres[1].GetX(0);
+        dstrect3.y = screen->h/2 - zoom*  C*sonde.GetY(0,0)/100.0 - terre->h/2 +   zoom*  astres[1].GetY(0);
+
+        dstrect5.x = screen->w/2 - zoom*  C*sonde.GetX(0,0)/100.0 - jupiter->w/2 +   zoom*  astres[2].GetX(0);
+        dstrect5.y = screen->h/2 - zoom*  C*sonde.GetY(0,0)/100.0 - jupiter->h/2 +   zoom*  astres[2].GetY(0);
+
+        dstrect6.x = screen->w/2 - zoom*  C*sonde.GetX(0,0)/100.0 - saturne->w/2 +   zoom*  astres[3].GetX(0);
+        dstrect6.y = screen->h/2 - zoom*  C*sonde.GetY(0,0)/100.0 - saturne->h/2 +   zoom*  astres[3].GetY(0);
+
+        dstrect7.x = screen->w/2 - zoom*  C*sonde.GetX(0,0)/100.0 - uranus->w/2 +   zoom*  astres[4].GetX(0);
+        dstrect7.y = screen->h/2 - zoom*  C*sonde.GetY(0,0)/100.0 - uranus->h/2 +   zoom*  astres[4].GetY(0);
 
 
         // message processing loop
@@ -276,13 +358,51 @@ int main ( int argc, char** argv )
             // clear screen
             SDL_FillRect(screen, 0, SDL_MapRGB(screen->format, 0, 0, 0));
 
+            cercle(zoom*astres[1].Getradius(), dstrect2.x + soleil->w/2, dstrect2.y + soleil->w/2, screen);
+            cercle(zoom*astres[2].Getradius(), dstrect2.x + soleil->w/2, dstrect2.y + soleil->w/2, screen);
+            cercle(zoom*astres[3].Getradius(), dstrect2.x + soleil->w/2, dstrect2.y + soleil->w/2, screen);
+            cercle(zoom*astres[4].Getradius(), dstrect2.x + soleil->w/2, dstrect2.y + soleil->w/2, screen);
+
+
             // draw bitmap
             SDL_BlitSurface(soleil,0, screen, &dstrect2);
             SDL_BlitSurface(terre, 0, screen, &dstrect3);
-            SDL_BlitSurface(jupiter, 0, screen, &dstrect5);
             SDL_BlitSurface(saturne, 0, screen, &dstrect6);
+            SDL_BlitSurface(jupiter, 0, screen, &dstrect5);
             SDL_BlitSurface(uranus, 0, screen, &dstrect7);
             SDL_BlitSurface(sondeBMP, 0, screen, &dstrect);
+
+
+
+            SDL_FillRect(rectangle, NULL, SDL_MapRGB(screen->format, 200, 100, 255));
+
+            for(int i=0;i<2000;i++){
+                if(i>taille) i=2000;
+                position.x=screen->w/2 - zoom*  C*sonde.GetX(0,0)/100.0 - 1 + zoom*  trajectoire[i].x/1000.0;
+                position.y=screen->h/2 - zoom*  C*sonde.GetY(0,0)/100.0 - 1 + zoom*  trajectoire[i].y/1000.0;
+
+                SDL_BlitSurface(rectangle, NULL, screen, &position); // Collage de la surface sur l'écran
+            }
+
+
+            SDL_FillRect(rectangle, NULL, SDL_MapRGB(screen->format, 100, 255, 200));
+
+            for(int i=0;i<500;i++){
+                position.x=screen->w/2 - zoom*  C*sonde.GetX(0,0)/100.0 - 1 + zoom*  approximation[i].x/1000.0;
+                position.y=screen->h/2 - zoom*  C*sonde.GetY(0,0)/100.0 - 1 + zoom*  approximation[i].y/1000.0;
+
+                SDL_BlitSurface(rectangle, NULL, screen, &position); // Collage de la surface sur l'écran
+            }
+
+            SDL_FillRect(rectangle, NULL, SDL_MapRGB(screen->format, 255, 0, 0));
+            position.x = screen->w/2 - zoom*  C*sonde.GetX(0,0)/100.0 - 2 +   zoom*  sonde.GetX(0,0);
+            position.y = screen->h/2 - zoom*  C*sonde.GetY(0,0)/100.0 - 2 +   zoom*  sonde.GetY(0,0);
+            SDL_BlitSurface(rectangle, NULL, screen, &position); // Collage de la surface sur l'écran
+
+            position.x = screen->w/2 - zoom*  C*sonde.GetX(0,0)/100.0 - 2 +   zoom*  astres[2].GetX(0);
+            position.y = screen->h/2 - zoom*  C*sonde.GetY(0,0)/100.0 - 2 +   zoom*  astres[2].GetY(0);
+            SDL_BlitSurface(rectangle, NULL, screen, &position); // Collage de la surface sur l'écran
+
 
             // finally, update the screen :)
             SDL_Flip(screen);
