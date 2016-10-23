@@ -1,4 +1,4 @@
-# LISEZ CA BANDE DE SALAUD !
+# LISEZ CA !
 
 CONDITIONS INITIALES : 
 pas=0.00005, zoom=25, positionX=1, positionY=0, vitesseX=0, vitesseY=9 (a modifier)
